@@ -27,6 +27,11 @@ export default defineConfig({
       component: './ServiceMng',
     },
     {
+      name: '个人中心',
+      path: '/accountcenter',
+      component: './AccountCenter',
+    },
+    {
       path: '/',
       component: '@/pages/index',
     },
