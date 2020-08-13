@@ -6,11 +6,6 @@ export default defineConfig({
   },
   title: 'KuoKuo',
   routes: [
-    // {
-    //   name: '登录',
-    //   path: '/userlogin',
-    //   component: './UserLogin',
-    // },
     {
       name: '订单',
       path: '/order-list',
@@ -34,6 +29,11 @@ export default defineConfig({
     {
       path: '/',
       component: '@/pages/index',
+    },
+    {
+      name: '登录',
+      path: '/userlogin',
+      component: './UserLogin',
     },
   ],
   dva: {
