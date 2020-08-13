@@ -1,15 +1,13 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Card, List, Typography } from 'antd';
 import React, { Component } from 'react';
-
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect, Dispatch } from 'umi';
 import { StateType } from './model';
 import { CardListItemDataType } from './data.d';
 import styles from './style.less';
-
+import FormFormInModal from './FormFormInModal';
 const { Paragraph } = Typography;
-
 interface StoreMngProps {
   storeMng: StateType;
   dispatch: Dispatch<any>;
@@ -37,7 +35,6 @@ class StoreMng extends Component<StoreMngProps, StoreMngState> {
       storeMng: { list },
       loading,
     } = this.props;
-
     const content = (
       <div className={styles.pageHeaderContent}>
         <p>
@@ -70,7 +67,6 @@ class StoreMng extends Component<StoreMngProps, StoreMngState> {
         </div>
       </div>
     );
-
     const extraContent = (
       <div className={styles.extraImg}>
         <img
@@ -120,7 +116,9 @@ class StoreMng extends Component<StoreMngProps, StoreMngState> {
                         description={
                           <Paragraph
                             className={styles.item}
-                            ellipsis={{ rows: 3 }}
+                            ellipsis={{
+                              rows: 3,
+                            }}
                           >
                             {item.description}
                           </Paragraph>
@@ -130,11 +128,10 @@ class StoreMng extends Component<StoreMngProps, StoreMngState> {
                   </List.Item>
                 );
               }
+
               return (
                 <List.Item>
-                  <Button type="dashed" className={styles.newButton}>
-                    <PlusOutlined /> 新增产品
-                  </Button>
+                  <FormFormInModal />
                 </List.Item>
               );
             }}
@@ -152,7 +149,9 @@ export default connect(
   }: {
     storeMng: StateType;
     loading: {
-      models: { [key: string]: boolean };
+      models: {
+        [key: string]: boolean;
+      };
     };
   }) => ({
     storeMng,

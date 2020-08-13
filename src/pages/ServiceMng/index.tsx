@@ -6,6 +6,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect, Dispatch } from 'umi';
 import { StateType } from './model';
 import { CardListItemDataType } from './data.d';
+import FormFormInModal from './FormFormInModal';
 import styles from './style.less';
 
 const { Paragraph } = Typography;
@@ -132,9 +133,7 @@ class ServiceMng extends Component<ServiceMngProps, ServiceMngState> {
               }
               return (
                 <List.Item>
-                  <Button type="dashed" className={styles.newButton}>
-                    <PlusOutlined /> 新增产品
-                  </Button>
+                  <FormFormInModal />
                 </List.Item>
               );
             }}

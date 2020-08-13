@@ -4,6 +4,7 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
+  title: 'KuoKuo',
   routes: [
     // {
     //   name: '登录',
