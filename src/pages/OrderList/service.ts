@@ -6,49 +6,27 @@ interface ParamsType extends Partial<BasicListItemDataType> {
 }
 
 export async function queryFakeList(params: ParamsType) {
-  return request('/api/fake_list', {
-    params,
+  const env = 'ffxq-01-tx4rd';
+  const name = 'user';
+  let accessToken = '';
+  await request(
+    '/wechat/cgi-bin/token?grant_type=client_credential&appid=wx20b2edadcbffa75b&secret=eaf7a374af70778b33a8865bfc258e5f',
+  ).then(res => {
+    accessToken = res.access_token;
   });
+  return request(
+    `/wechat/tcb/invokecloudfunction?access_token=${accessToken}&env=${env}&name=${name}`,
+    {
+      method: 'POST',
+    },
+  );
 }
 
-export async function removeFakeList(params: ParamsType) {
-  const { count = 5, ...restParams } = params;
-  return request('/api/fake_list', {
-    method: 'POST',
-    params: {
-      count,
+export async function getAccessToken(params: ParamsType) {
+  return request(
+    '/wechat/cgi-bin/token?grant_type=client_credential&appid=wx20b2edadcbffa75b&secret=eaf7a374af70778b33a8865bfc258e5f',
+    {
+      params,
     },
-    data: {
-      ...restParams,
-      method: 'delete',
-    },
-  });
-}
-
-export async function addFakeList(params: ParamsType) {
-  const { count = 5, ...restParams } = params;
-  return request('/api/fake_list', {
-    method: 'POST',
-    params: {
-      count,
-    },
-    data: {
-      ...restParams,
-      method: 'post',
-    },
-  });
-}
-
-export async function updateFakeList(params: ParamsType) {
-  const { count = 5, ...restParams } = params;
-  return request('/api/fake_list', {
-    method: 'POST',
-    params: {
-      count,
-    },
-    data: {
-      ...restParams,
-      method: 'update',
-    },
-  });
+  );
 }

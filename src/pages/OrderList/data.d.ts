@@ -5,25 +5,8 @@ export interface Member {
 }
 
 export interface BasicListItemDataType {
-  id: string;
-  owner: string;
-  title: string;
-  avatar: string;
-  cover: string;
-  status: 'normal' | 'exception' | 'active' | 'success';
-  percent: number;
-  logo: string;
-  href: string;
-  body?: any;
-  updatedAt: number;
-  createdAt: number;
-  subDescription: string;
-  description: string;
-  activeUser: number;
-  newUser: number;
-  star: number;
-  like: number;
-  message: number;
-  content: string;
-  members: Member[];
+  _id: string;
+  name: string;
+  phone: string;
+  age: number;
 }

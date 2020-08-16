@@ -40,4 +40,11 @@ export default defineConfig({
     immer: true,
     hmr: false,
   },
+  proxy: {
+    '/wechat': {
+      target: 'https://api.weixin.qq.com',
+      pathRewrite: { '^/wechat': '' },
+      changeOrigin: true,
+    },
+  },
 });
