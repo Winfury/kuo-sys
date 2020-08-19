@@ -1,10 +1,10 @@
 import { Effect, Reducer } from 'umi';
 
-import { CardListItemDataType } from './data.d';
+import { ServiceItemType } from './data.d';
 import { queryFakeList } from './service';
 
 export interface StateType {
-  list: CardListItemDataType[];
+  list: ServiceItemType[];
 }
 
 export interface ModelType {

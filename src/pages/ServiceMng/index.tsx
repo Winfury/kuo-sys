@@ -1,15 +1,39 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Card, List, Typography } from 'antd';
+import { Button, Card, List, Typography, Avatar, Tag } from 'antd';
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faBath,
+  faShower,
+  faBell,
+  faStethoscope,
+  faCut,
+  faGift,
+  faBug,
+  faPaw,
+  faLeaf,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect, Dispatch } from 'umi';
 import { StateType } from './model';
-import { CardListItemDataType } from './data.d';
+import { ServiceItemType } from './data.d';
 import FormFormInModal from './FormFormInModal';
 import styles from './style.less';
 
 const { Paragraph } = Typography;
+
+const icons = {
+  faBath,
+  faShower,
+  faBell,
+  faStethoscope,
+  faCut,
+  faGift,
+  faBug,
+  faPaw,
+  faLeaf,
+};
 
 interface ServiceMngProps {
   serviceMng: StateType;
@@ -19,7 +43,7 @@ interface ServiceMngProps {
 interface ServiceMngState {
   visible: boolean;
   done: boolean;
-  current?: Partial<CardListItemDataType>;
+  current?: Partial<ServiceItemType>;
 }
 
 class ServiceMng extends Component<ServiceMngProps, ServiceMngState> {
@@ -42,33 +66,10 @@ class ServiceMng extends Component<ServiceMngProps, ServiceMngState> {
     const content = (
       <div className={styles.pageHeaderContent}>
         <p>
-          段落示意：蚂蚁金服务设计平台
-          ant.design，用最小的工作量，无缝接入蚂蚁金服生态，
-          提供跨越设计与开发的体验解决方案。
+          每一次修改，删除已有服务类型，可能造成当前已有订单异常
+          <br />
+          请谨慎维护服务类型
         </p>
-        <div className={styles.contentLink}>
-          <a>
-            <img
-              alt=""
-              src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
-            />{' '}
-            快速开始
-          </a>
-          <a>
-            <img
-              alt=""
-              src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg"
-            />{' '}
-            产品简介
-          </a>
-          <a>
-            <img
-              alt=""
-              src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
-            />{' '}
-            产品文档
-          </a>
-        </div>
       </div>
     );
 
@@ -80,11 +81,12 @@ class ServiceMng extends Component<ServiceMngProps, ServiceMngState> {
         />
       </div>
     );
-    const nullData: Partial<CardListItemDataType> = {};
+    const nullData: Partial<ServiceItemType> = {};
+    console.log(icons);
     return (
       <PageHeaderWrapper content={content} extraContent={extraContent}>
         <div className={styles.cardList}>
-          <List<Partial<CardListItemDataType>>
+          <List<Partial<ServiceItemType>>
             rowKey="id"
             loading={loading}
             grid={{
@@ -96,7 +98,7 @@ class ServiceMng extends Component<ServiceMngProps, ServiceMngState> {
               xl: 4,
               xxl: 4,
             }}
-            dataSource={[nullData, ...list]}
+            dataSource={[...list, nullData]}
             renderItem={item => {
               if (item && item.id) {
                 return (
@@ -105,25 +107,34 @@ class ServiceMng extends Component<ServiceMngProps, ServiceMngState> {
                       hoverable
                       className={styles.card}
                       actions={[
-                        <a key="option1">操作一</a>,
-                        <a key="option2">操作二</a>,
+                        <a key="option1">编辑</a>,
+                        <a key="option2">删除</a>,
                       ]}
                     >
                       <Card.Meta
                         avatar={
-                          <img
-                            alt=""
-                            className={styles.cardAvatar}
-                            src={item.avatar}
-                          />
+                          item.icon && (
+                            <Avatar>
+                              <FontAwesomeIcon icon={icons[item.icon]} />
+                            </Avatar>
+                          )
                         }
-                        title={<a>{item.title}</a>}
+                        title={
+                          <>
+                            {item.status === 'ON' && (
+                              <Tag color="blue">已上架</Tag>
+                            )}
+                            {item.status === 'OFF' && <Tag>已下架</Tag>}
+                            <a>{item.name}</a>
+                          </>
+                        }
                         description={
                           <Paragraph
                             className={styles.item}
                             ellipsis={{ rows: 3 }}
                           >
-                            {item.description}
+                            {item.price} 元 / {item.duration} 分钟
+                            <br /> {item.description}
                           </Paragraph>
                         }
                       />
